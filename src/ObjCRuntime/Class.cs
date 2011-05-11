@@ -176,7 +176,7 @@ namespace MonoMac.ObjCRuntime {
 
 				class_addMethod (handle, builder.Selector, builder.Delegate, builder.Signature);
 				method_wrappers.Add (builder.Delegate);
-#if DEBUG
+#if MONOMAC_DEBUG
 				Console.WriteLine ("[CTOR] Registering {0}[0x{1:x}|{2}] on {3} -> ({4})", "init", (int) builder.Selector, builder.Signature, type, default_ctor);
 #endif
 			}
@@ -189,7 +189,7 @@ namespace MonoMac.ObjCRuntime {
 
 				class_addMethod (handle, builder.Selector, builder.Delegate, builder.Signature);
 				method_wrappers.Add (builder.Delegate);
-#if DEBUG
+#if MONOMAC_DEBUG
 				Console.WriteLine ("[CTOR] Registering {0}[0x{1:x}|{2}] on {3} -> ({4})", ea.Selector, (int) builder.Selector, builder.Signature, type, cinfo);
 #endif
 			}
@@ -229,7 +229,7 @@ namespace MonoMac.ObjCRuntime {
 
 			class_addMethod (minfo.IsStatic ? ((objc_class *) handle)->isa : handle, builder.Selector, builder.Delegate, builder.Signature);
 			method_wrappers.Add (builder.Delegate);
-#if DEBUG
+#if MONOMAC_DEBUG
 			Console.WriteLine ("[METHOD] Registering {0}[0x{1:x}|{2}] on {3} -> ({4})", ea.Selector, (int) builder.Selector, builder.Signature, type, minfo);
 #endif
 		}
