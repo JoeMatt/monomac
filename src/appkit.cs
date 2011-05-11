@@ -33,7 +33,7 @@ using MonoMac.ObjCRuntime;
 using MonoMac.CoreGraphics;
 using MonoMac.CoreImage;
 using MonoMac.CoreAnimation;
-using MonoMac.CoreData;
+//using MonoMac.CoreData;
 using MonoMac.OpenGL;
 
 namespace MonoMac.AppKit {
@@ -9690,8 +9690,8 @@ namespace MonoMac.AppKit {
 		[Export ("removeTrackingRect:")]
 		void RemoveTrackingRect (int tag);
 
-		[Export ("makeBackingLayer")]
-		CALayer MakeBackingLayer ();
+//		[Export ("makeBackingLayer")]
+//		CALayer MakeBackingLayer ();
 
 		[Export ("addTrackingArea:")]
 		void AddTrackingArea (NSTrackingArea trackingArea);
@@ -9800,8 +9800,8 @@ namespace MonoMac.AppKit {
 		[Export ("wantsLayer")]
 		bool WantsLayer { get; set; }
 
-		[Export ("layer")]
-		CALayer Layer { get; set; }
+//		[Export ("layer")]
+//		CALayer Layer { get; set; }
 
 		[Export ("alphaValue")]
 		float AlphaValue { get; set; }
@@ -9894,6 +9894,14 @@ namespace MonoMac.AppKit {
 		[Static, Export ("defaultAnimationForKey:")]
 		NSObject DefaultAnimationFor (NSString key);
 #endregion
+
+        [Export ("focusRingType")]
+        NSFocusRingType FocusRingType { get; set; }
+        
+        [Export ("defaultFocusRingType")]
+        [Static]
+        NSFocusRingType DefaultFocusRingType { get; }
+        
 	}
 
 	[BaseType (typeof (NSAnimation))]
@@ -13333,9 +13341,9 @@ namespace MonoMac.AppKit {
 		//NSObject InitWithLeftExpressionsrightExpressionsmodifieroperatorsoptions (NSArray leftExpressions, NSArray rightExpressions, NSComparisonPredicateModifier modifier, NSArray operators, uint options);
 		IntPtr Constructor (NSExpression[] leftExpressions, NSExpression[] rightExpressions, NSComparisonPredicateModifier modifier, NSObject[] operators, NSComparisonPredicateOptions options);
 
-		[Export ("initWithLeftExpressions:rightExpressionAttributeType:modifier:operators:options:")]
+		//[Export ("initWithLeftExpressions:rightExpressionAttributeType:modifier:operators:options:")]
 		//NSObject InitWithLeftExpressionsrightExpressionAttributeTypemodifieroperatorsoptions (NSArray leftExpressions, NSAttributeType attributeType, NSComparisonPredicateModifier modifier, NSArray operators, uint options);
-		IntPtr Constructor (NSExpression[] leftExpressions, NSAttributeType attributeType, NSComparisonPredicateModifier modifier, NSObject[] operators, NSComparisonPredicateOptions options);
+		//IntPtr Constructor (NSExpression[] leftExpressions, NSAttributeType attributeType, NSComparisonPredicateModifier modifier, NSObject[] operators, NSComparisonPredicateOptions options);
 
 		[Export ("initWithCompoundTypes:")]
 		IntPtr Constructor (NSNumber[] compoundTypes);
@@ -13346,8 +13354,8 @@ namespace MonoMac.AppKit {
 		[Export ("rightExpressions")]
 		NSExpression[] RightExpressions { get; }
 
-		[Export ("rightExpressionAttributeType")]
-		NSAttributeType RightExpressionAttributeType { get; }
+		//[Export ("rightExpressionAttributeType")]
+		//NSAttributeType RightExpressionAttributeType { get; }
 
 		[Export ("modifier")]
 		NSComparisonPredicateModifier Modifier { get; }
@@ -13361,10 +13369,10 @@ namespace MonoMac.AppKit {
 		[Export ("compoundTypes")]
 		NSNumber[] CompoundTypes { get; }
 
-		[Static]
-		[Export ("templatesWithAttributeKeyPaths:inEntityDescription:")]
+		//[Static]
+		//[Export ("templatesWithAttributeKeyPaths:inEntityDescription:")]
 		//NSArray TemplatesWithAttributeKeyPathsinEntityDescription (NSArray keyPaths, NSEntityDescription entityDescription);
-		NSPredicateEditorRowTemplate[] GetTemplates (string[] keyPaths, NSEntityDescription entityDescription);
+		//NSPredicateEditorRowTemplate[] GetTemplates (string[] keyPaths, NSEntityDescription entityDescription);
 
 	}
    

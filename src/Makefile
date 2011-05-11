@@ -14,7 +14,6 @@ CORE_SOURCES =					\
 	./CoreImage/Enums.cs				\
 	./Foundation/EnumDesktop.cs			\
 	./Foundation/NSObject.cs			\
-	./ImageKit/Enums.cs				\
 	./ObjCRuntime/Class.cs				\
 	./ObjCRuntime/Messaging.cs			\
 	./ObjCRuntime/NativeConstructorBuilder.cs	\
@@ -26,12 +25,12 @@ CORE_SOURCES =					\
 	./ObjCRuntime/Runtime.cs			\
 	./ObjCRuntime/RequiredFrameworkAttribute.cs	\
 	./ObjCRuntime/Selector.cs			\
-	./PdfKit/Enums.cs				\
 	./QTKit/Defs.cs					\
 	./QTKit/Enums.cs				\
 	./OpenGL/CGLEnums.cs				\
 	./OpenGL/CGLContext.cs				\
 	./OpenGL/CGLPixelFormat.cs			\
+#./PdfKit/Enums.cs				\
 	./WebKit/Enums.cs
 
 # Sources that are not part of CORE_SOURCES or the generated templates
@@ -39,18 +38,13 @@ MONOMAC_SOURCES = \
 	./Foundation/NSObjectMac.cs			\
 	./Foundation/NSSearchPath.cs		\
 	./AppKit/ActionDispatcher.cs			\
-	./AppKit/BeginSheet.cs				\
-	./AppKit/DoubleWrapper.cs			\
 	./AppKit/Functions.cs				\
-	./AppKit/NSActionCell.cs			\
 	./AppKit/NSApplication.cs			\
 	./AppKit/NSApplicationDelegate.cs		\
 	./AppKit/NSBitmapImageRep.cs			\
 	./AppKit/NSButton.cs				\
-	./AppKit/NSBezierPath.cs			\
 	./AppKit/NSColor.cs				\
 	./AppKit/NSControl.cs				\
-	./AppKit/NSGradient.cs				\
 	./AppKit/NSGraphics.cs				\
 	./AppKit/NSImage.cs				\
 	./AppKit/NSLevelIndicator.cs			\
@@ -58,19 +52,26 @@ MONOMAC_SOURCES = \
 	./AppKit/NSMenu.cs				\
 	./AppKit/NSMenuItem.cs				\
 	./AppKit/NSOpenGLPixelFormat.cs			\
-	./AppKit/NSPopUpButton.cs			\
-	./AppKit/NSPopUpButtonCell.cs			\
-	./AppKit/NSSegmentedControl.cs			\
-	./AppKit/NSTableView.cs				\
 	./AppKit/NSWindow.cs				\
-	./CoreImage/CIContext.cs			\
+	./Growl/Constants.cs				\
+#	./AppKit/NSTableView.cs				\
+./AppKit/NSBezierPath.cs			\
+./AppKit/NSGradient.cs				\
+./AppKit/NSLevelIndicator.cs			\
+./AppKit/NSMatrix.cs				\
+./AppKit/NSActionCell.cs			\
+./AppKit/BeginSheet.cs				\
+./AppKit/DoubleWrapper.cs			\
+./AppKit/NSPopUpButton.cs			\
+./AppKit/NSPopUpButtonCell.cs			\
+./AppKit/NSSegmentedControl.cs			\
+#	./CoreImage/CIContext.cs			\
 	./CoreImage/CISampler.cs			\
 	./CoreImage/CIVector.cs				\
 	./CoreVideo/CVDisplayLink.cs			\
-	./Growl/Constants.cs				\
 	./QTKit/QTCaptureDevice.cs			\
 	./QTKit/QTMovie.cs				\
-	./WebKit/DomNode.cs				\
+#	./WebKit/DomNode.cs				\
 	./WebKit/Enumerators.cs				\
 	./WebKit/Indexers.cs				\
 	./WebKit/WebKit.cs				\
@@ -83,7 +84,7 @@ MONOMAC_SOURCES = \
 	./OpenGL/MonoMacGameView.cs
 
 OPENTK_SOURCES = \
-	./OpenGL/OpenTK/Graphics/Color4.cs		\
+#	./OpenGL/OpenTK/Graphics/Color4.cs		\
 	./OpenGL/OpenTK/Graphics/OpenGL/GL.cs		\
 	./OpenGL/OpenTK/Graphics/OpenGL/GLCore.cs	\
 	./OpenGL/OpenTK/Graphics/OpenGL/GLEnums.cs	\
@@ -113,7 +114,7 @@ GENERATOR_SOURCES = \
 SOURCES = \
 	$(CORE_SOURCES)
 
-DEFINES = -define:NET_2_0
+DEFINES = -define:NET_4_0
 
 TARGETS = _bmac.exe MonoMac.dll  parse.exe bmac.exe
 
@@ -121,43 +122,52 @@ include Make.shared
 
 SHARED_API = \
 	./foundation.cs		\
-	./coreanimation.cs	\
-	./coredata.cs		\
-	./corelocation.cs
+#	./coredata.cs		\
+#	./corelocation.cs
+#	./coreanimation.cs	\
 
 SHARED_SOURCES = $(patsubst %,../../maccore/src/%,$(SHARED_SOURCE))
 SHARED_CORE_SOURCES = $(patsubst %,../../maccore/src/%,$(SHARED_CORE_SOURCE))
 SHARED_APIS = $(patsubst %,../../maccore/src/%,$(SHARED_API))
 
+#echo $SHARED_CORE_SOURCES
+#echo $SHARED_APIS
+
 APIS = \
 	appkit.cs		\
 	coreimage.cs		\
-	corewlan.cs		\
 	foundation-desktop.cs 	\
 	growl.cs		\
+	$(SHARED_APIS)
+#	corewlan.cs		\
 	imagekit.cs		\
 	qtkit.cs		\
 	pdfkit.cs		\
 	webkit.cs		\
 	composer.cs		\
-	$(SHARED_APIS)
 
 all: $(TARGETS)
-
+    
 parse.exe: parse.cs
-	gmcs parse.cs
+	dmcs parse.cs
 
 core.dll: $(CORE_SOURCES) $(SHARED_CORE_SOURCES) Makefile
-	gmcs -target:library -debug -unsafe -out:core.dll -define:MONOMAC,MONOMAC_BOOTSTRAP,COREBUILD $(CORE_SOURCES) $(SHARED_CORE_SOURCES) -r:System.Drawing
+	dmcs -target:library -debug -unsafe -out:core.dll -define:MONOMAC,MONOMAC_BOOTSTRAP,COREBUILD $(CORE_SOURCES) $(SHARED_CORE_SOURCES) -r:System.Drawing
 
 _bmac.exe: $(APIS) core.dll $(GENERATOR_SOURCES)
-	gmcs -unsafe -out:_bmac.exe -debug $(DEFINES) -define:GENERATOR,MONOMAC,MONOMAC_BOOTSTRAP $(GENERATOR_SOURCES) -r:core.dll
+	dmcs -unsafe -out:_bmac.exe -debug $(DEFINES) -define:GENERATOR,MONOMAC,MONOMAC_BOOTSTRAP $(GENERATOR_SOURCES) -r:core.dll
+
+core.dll: $(CORE_SOURCES) $(SHARED_CORE_SOURCES) Makefile
+	dmcs -target:library -debug -unsafe -out:core.dll -define:MONOMAC,MONOMAC_BOOTSTRAP,COREBUILD $(CORE_SOURCES) $(SHARED_CORE_SOURCES) -r:System.Drawing
+
+_bmac.exe: $(APIS) core.dll $(GENERATOR_SOURCES)
+	dmcs -unsafe -out:_bmac.exe -debug $(DEFINES) -define:GENERATOR,MONOMAC,MONOMAC_BOOTSTRAP $(GENERATOR_SOURCES) -r:core.dll
 
 generated_sources: _bmac.exe $(APIS) 
 	mono --debug _bmac.exe -a -d=MONOMAC --core --sourceonly=generated_sources -v -tmpdir=. $(APIS) --baselib=core.dll --ns=MonoMac.ObjCRuntime -r=System.Drawing
 
 bmac.exe: MonoMac.dll $(GENERATOR_SOURCES)
-	gmcs -unsafe -out:bmac.exe -debug $(DEFINES) -define:GENERATOR,MONOMAC,MONOMAC_BOOTSTRAP $(GENERATOR_SOURCES) -r:MonoMac.dll
+	dmcs -unsafe -out:bmac.exe -debug $(DEFINES) -define:GENERATOR,MONOMAC,MONOMAC_BOOTSTRAP $(GENERATOR_SOURCES) -r:MonoMac.dll
 
 count: 
 	make pass | wc -l
@@ -166,7 +176,7 @@ counts:
 	make pass | grep 'could not be' | sed 's/.*`//' | sed "s/'.*//" | sort | uniq -c | sort -n
 
 MonoMac.dll: $(SOURCES) generated_sources $(MONOMAC_SOURCES) $(SHARED_SOURCES) $(SHARED_CORE_SOURCES) $(OPENTK_SOURCES)
-	gmcs -define:OBJECT_REF_TRACKING -nowarn:3021,0219,0414,$(WARNINGS_I_SHOULD_FIX) -debug -unsafe $(SOURCES) @generated_sources $(MONOMAC_SOURCES) $(SHARED_SOURCES) $(SHARED_CORE_SOURCES) $(OPENTK_SOURCES) -target:library -define:MONOMAC -out:MonoMac.dll -r:System.Drawing
+	dmcs -define:OBJECT_REF_TRACKING -nowarn:3021,0219,0414,$(WARNINGS_I_SHOULD_FIX) -debug -unsafe $(SOURCES) @generated_sources $(MONOMAC_SOURCES) $(SHARED_SOURCES) $(SHARED_CORE_SOURCES) $(OPENTK_SOURCES) -target:library -define:MONOMAC -out:MonoMac.dll -r:System.Drawing -keycontainer:Sooloos.snk
 
 clean:
 	rm -f $(TARGETS) core.dll

@@ -51,7 +51,7 @@ namespace MonoMac.AppKit {
 					//if (AssemblyName.ReferenceMatchesDefinition (r, name)) {
 					if (name == r.ToString ()) {
 						Runtime.RegisterAssembly (a);
-						break;
+						return;
 					}
 				}
 			}

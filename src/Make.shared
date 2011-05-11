@@ -21,14 +21,6 @@ SHARED_SOURCE = \
 	./AudioUnit/ExtAudioFile.cs			\
 	./AudioUnit/_AudioConverter.cs			\
 	./AudioUnit/_AudioConverterEventArgs.cs		\
-	./AddressBook/ABAddressBook.cs			\
-	./AddressBook/ABGroup.cs			\
-	./AddressBook/ABMultiValue.cs			\
-	./AddressBook/ABPerson.cs			\
-	./AddressBook/ABRecord.cs			\
-	./CoreAnimation/CADefs.cs			\
-	./CoreAnimation/CALayer.cs			\
-	./CoreAnimation/CATextLayer.cs			\
 	./CoreFoundation/CFArray.cs                     \
 	./CoreFoundation/CFBoolean.cs                   \
 	./CoreFoundation/CFDictionary.cs                \
@@ -41,8 +33,6 @@ SHARED_SOURCE = \
 	./CoreGraphics/CGPDFStream.cs			\
 	./CoreGraphics/CGPDFDictionary.cs		\
 	./CoreGraphics/CGShading.cs			\
-	./CoreLocation/CoreLocation2.cs			\
-	./CoreLocation/CLLocationManager.cs		\
 	./CoreText/Adapter.cs				\
 	./CoreText/CTFont.Generator.cs			\
 	./CoreText/CTFont.cs				\
@@ -100,16 +90,25 @@ SHARED_SOURCE = \
 	./ImageIO/CGImageSource.cs			\
 	./ImageIO/CGImageDestination.cs			\
 	./ObjCRuntime/CompileFlagsAttribute.cs		\
-	./Security/Enums.cs				\
+#	./Security/Enums.cs				\
 	./Security/Certificate.cs			\
 	./Security/Items.cs				\
 	./Security/Policy.cs				\
 	./Security/Trust.cs
-
+#	./AddressBook/ABAddressBook.cs			\
+	./AddressBook/ABGroup.cs			\
+	./AddressBook/ABMultiValue.cs			\
+	./AddressBook/ABPerson.cs			\
+	./AddressBook/ABRecord.cs			\
+	./CoreAnimation/CADefs.cs			\
+	./CoreAnimation/CALayer.cs			\
+	./CoreAnimation/CATextLayer.cs			\
+	./CoreLocation/CoreLocation2.cs			\
+	./CoreLocation/CLLocationManager.cs		\
+	
 SHARED_CORE_SOURCE = \
 	./CoreAnimation/CATransform3D.cs		\
 	./CoreAnimation/CAEnums.cs			\
-	./CoreData/Enums.cs				\
 	./CoreFoundation/CFString.cs                    \
 	./CoreFoundation/CFUrl.cs                       \
 	./CoreFoundation/CFRunLoop.cs                   \
@@ -130,8 +129,6 @@ SHARED_CORE_SOURCE = \
 	./CoreGraphics/CGPDFPage.cs                     \
 	./CoreGraphics/CGPath.cs                        \
 	./CoreGraphics/CGPattern.cs                     \
-	./CoreLocation/CLEnums.cs			\
-	./CoreLocation/CoreLocation.cs			\
 	./CoreMedia/CMBlockBuffer.cs			\
 	./CoreMedia/CMFormatDescription.cs		\
 	./CoreMedia/CMSampleBuffer.cs			\
@@ -162,4 +159,6 @@ SHARED_CORE_SOURCE = \
         ./ObjCRuntime/SinceAttribute.cs                 \
         ./ObjCRuntime/TypeConverter.cs                  \
 	./MonoPInvokeCallbackAttribute.cs
-
+#	./CoreLocation/CLEnums.cs			\
+	./CoreLocation/CoreLocation.cs			\
+	./CoreData/Enums.cs				\
