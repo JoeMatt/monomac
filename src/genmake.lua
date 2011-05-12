@@ -37,7 +37,7 @@ project "MonoMac_bmac" -- bmac.exe
         "MonoMac_Core",
     }
 
-    postbuildactions { program = "./generate_sources.sh" }
+    postbuildactions { program = "./generate_sources.sh", args = "" }
 
 done "MonoMac_bmac"
 
