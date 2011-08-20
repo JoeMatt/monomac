@@ -36,6 +36,25 @@ namespace MonoMac.ObjCRuntime {
 		static Dictionary <IntPtr, WeakReference> object_map = new Dictionary <IntPtr, WeakReference> ();
 		static object lock_obj = new object ();
 		static IntPtr selClass = Selector.GetHandle ("class");
+
+                static StreamWriter _log;
+                static Runtime()
+                {
+                    if (Environment.GetEnvironmentVariable("DEBUG_MONOMAC_TYPE_CACHING") != null)
+                    {
+                        string fn = "../../../../../type_caching_log_" + DateTime.Now.Ticks + ".txt";
+                        _log = new StreamWriter(File.Open(fn, FileMode.Append, FileAccess.Write, FileShare.ReadWrite));
+                        _Log("Start App");
+                    }
+                }
+
+                static void _Log(string s)
+                {
+                    if (_log == null) return;
+                    DateTime d = DateTime.Now;
+                    _log.WriteLine(string.Format("{0:00}/{1:00} {2:00}:{3:00}:{4:00} ",
+                                                 d.Month, d.Day, d.Hour, d.Minute, d.Second) + s);
+                }
 		
 		public static void RegisterAssembly (Assembly a) {
 			var attributes = a.GetCustomAttributes (typeof (RequiredFrameworkAttribute), false);
@@ -94,12 +113,14 @@ namespace MonoMac.ObjCRuntime {
 
 		internal static void UnregisterNSObject (IntPtr ptr) {
 			lock (lock_obj) {
+                            _Log(string.Format("Unregister {0}", ((uint)ptr.ToInt32()).ToString("X")));
 				object_map.Remove (ptr);
 			}
 		}
 
 		internal static void RegisterNSObject (NSObject obj, IntPtr ptr) {
 			lock (lock_obj) {
+                            _Log(string.Format("Register {0} of type {1}", ((uint)ptr.ToInt32()).ToString("X"), obj.GetType()));
 				object_map [ptr] = new WeakReference (obj);
 				obj.Handle = ptr;
 			}
@@ -109,7 +130,10 @@ namespace MonoMac.ObjCRuntime {
 			lock (lock_obj) {
 				WeakReference reference;
 				if (object_map.TryGetValue (ptr, out reference))
+                                {
+                                    _Log(string.Format("Try got {0} of type {1}", ((uint)ptr.ToInt32()).ToString("X"), reference.Target.GetType()));
 					return (NSObject) reference.Target;
+                                }
 			}
 
 			return null;
@@ -124,7 +148,10 @@ namespace MonoMac.ObjCRuntime {
 			lock (lock_obj) {
 				WeakReference reference;
 				if (object_map.TryGetValue (ptr, out reference))
+                                {
+                                    _Log(string.Format("Get got {0} of type {1}", ((uint)ptr.ToInt32()).ToString("X"), reference.Target.GetType()));
 					return (NSObject) reference.Target;
+                                }
 			}
 			
 			type = Class.Lookup (Messaging.intptr_objc_msgSend (ptr, selClass));
